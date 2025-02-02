@@ -13,7 +13,6 @@ public class PersistCarInfoServiceTests
         _service = new PersistCarInfoService(); // compile error
     }
 
-    // v3
     [Test]
     public void Insert_Should_Exist_Within_PersistCarInfoService()
     {
@@ -21,17 +20,26 @@ public class PersistCarInfoServiceTests
         
         Assert.Pass();
     }
+
+    [Test]
+    public async Task Insert_Should_Return_CarInfoResult()
+    {
+        var result = await _service.InsertAsync(A.Fake<CarInfo>());
+        
+        Assert.NotNull(result);
+    }
 }
 
 public class PersistCarInfoService : IPersistCarInfoService
 {
-    public async Task InsertAsync(CarInfo carInfo)
+    public async Task<CarInfoInsertResult> InsertAsync(CarInfo carInfo)
     {
         throw new NotImplementedException();
     }
 }
 
+// todo: maybe this alaways had existed from prior ticket
 internal interface IPersistCarInfoService
 {
-    Task InsertAsync(CarInfo carInfo);
+    Task<CarInfoInsertResult> InsertAsync(CarInfo carInfo);
 }
