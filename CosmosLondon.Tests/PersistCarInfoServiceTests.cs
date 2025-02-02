@@ -14,16 +14,6 @@ public class PersistCarInfoServiceTests
     }
 
     [Test]
-    public void Insert_Should_Exist_Within_PersistCarInfoService()
-    {
-        var carInfo = GoodCarInfo();
-        
-        _service.InsertAsync(carInfo);
-        
-        Assert.Pass();
-    }
-
-    [Test]
     public async Task Insert_Should_Return_Success_CarInfoResult_When_Good_CarInfo()
     {
         var carInfo = GoodCarInfo();
