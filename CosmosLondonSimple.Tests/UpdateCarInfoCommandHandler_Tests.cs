@@ -20,23 +20,23 @@ public class UpdateCarInfoCommandHandler_Tests
     }
 
     [Test]
-    public async Task HandleAsync_Should_Return_CarInfoUpdateResult()
+    public async Task HandleAsync_Should_Accept_GoodInfo_And_Return_Success_Result()
     {
         var result = await _handler.HandleAsync(A.Fake<CarInfo>());
         
-        Assert.NotNull(result);
+        Assert.True(result.Successful);
     }
 }
 
 public record CarInfo();
 
-public record CarInfoUpdateResult();
+public record CarInfoUpdateResult(bool Successful);
 
 public class UpdateCarInfoCommandHandler : IUpdateCarInfoCommandHandler
 {
     public async Task<CarInfoUpdateResult> HandleAsync(CarInfo fake)
     {
-        return new CarInfoUpdateResult();
+        return new CarInfoUpdateResult(false);
     }
 }
 
