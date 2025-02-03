@@ -12,7 +12,7 @@ public class UpdateCarInfoCommandHandler_Tests
     {
         _validator = A.Fake<ICarInfoValidator>();
         
-        _handler = new UpdateCarInfoCommandHandler();
+        _handler = new UpdateCarInfoCommandHandler(_validator);
     }
     
     [Test]
@@ -50,8 +50,16 @@ public record CarInfoUpdateResult(bool Successful);
 
 public class UpdateCarInfoCommandHandler : IUpdateCarInfoCommandHandler
 {
-    public async Task<CarInfoUpdateResult> HandleAsync(CarInfo fake)
+    private readonly ICarInfoValidator _validator;
+
+    public UpdateCarInfoCommandHandler(ICarInfoValidator validator)
     {
+        _validator = validator;
+    }
+
+    public async Task<CarInfoUpdateResult> HandleAsync(CarInfo carInfo)
+    {
+        _validator.Validate(carInfo);
         return new CarInfoUpdateResult(true);
     }
 }
