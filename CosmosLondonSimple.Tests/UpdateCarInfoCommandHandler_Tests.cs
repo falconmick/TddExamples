@@ -7,14 +7,15 @@ public class UpdateCarInfoCommandHandler_Tests
 {
     private ICarInfoValidator _validator;
     private IUpdateCarInfoCommandHandler _handler;
-    private ILogger _logger;
+    private ILog _logger;
 
     [SetUp]
     public void Setup()
     {
         _validator = A.Fake<ICarInfoValidator>();
+        _logger = A.Fake<ILog>();
         
-        _handler = new UpdateCarInfoCommandHandler(_validator);
+        _handler = new UpdateCarInfoCommandHandler(_validator, _logger);
     }
     
     [Test]
@@ -69,6 +70,29 @@ public class UpdateCarInfoCommandHandler_Tests
     }
 }
 
+/* ADAPTERS */
+public interface ILog
+{
+    void LogError(string? message, params object?[] args);
+}
+
+public class LogAdapter : ILog
+{
+    private readonly ILogger _logger;
+
+    public LogAdapter(ILogger logger)
+    {
+        _logger = logger;
+    }
+
+
+    public void LogError(string? message, params object?[] args)
+    {
+        _logger.LogError(message, args);
+    }
+}
+/* ADAPTERS */
+
 public interface ICarInfoValidator
 {
     bool Validate(CarInfo carInfo);
@@ -81,15 +105,24 @@ public record CarInfoUpdateResult(bool Successful);
 public class UpdateCarInfoCommandHandler : IUpdateCarInfoCommandHandler
 {
     private readonly ICarInfoValidator _validator;
+    private readonly ILog _logger;
 
-    public UpdateCarInfoCommandHandler(ICarInfoValidator validator)
+    public UpdateCarInfoCommandHandler(ICarInfoValidator validator, ILog logger)
     {
         _validator = validator;
+        _logger = logger;
     }
 
     public async Task<CarInfoUpdateResult> HandleAsync(CarInfo carInfo)
     {
-        return new CarInfoUpdateResult(_validator.Validate(carInfo));
+        var isValid = _validator.Validate(carInfo);
+
+        if (!isValid)
+        {
+            _logger.LogError("Car: {CarName} invalid", carInfo.CarName);
+        }
+        
+        return new CarInfoUpdateResult(isValid);
     }
 }
 
