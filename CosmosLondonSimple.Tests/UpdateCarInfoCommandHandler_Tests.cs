@@ -13,7 +13,7 @@ public class UpdateCarInfoCommandHandler_Tests
     }
 
     [Test]
-    public async Task Test1()
+    public async Task HandleAsync_Should_Exist_And_Accept_CarInfo()
     {
         await _handler.HandleAsync(A.Fake<CarInfo>());
         Assert.Pass();
