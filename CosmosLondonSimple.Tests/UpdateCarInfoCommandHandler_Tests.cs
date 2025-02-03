@@ -7,13 +7,13 @@ public class UpdateCarInfoCommandHandler_Tests
 {
     private ICarInfoValidator _validator;
     private IUpdateCarInfoCommandHandler _handler;
-    private ILog _logger;
+    private FakeLogger _logger;
 
     [SetUp]
     public void Setup()
     {
         _validator = A.Fake<ICarInfoValidator>();
-        _logger = A.Fake<ILog>();
+        _logger = new FakeLogger();
         
         _handler = new UpdateCarInfoCommandHandler(_validator, _logger);
     }
@@ -61,7 +61,8 @@ public class UpdateCarInfoCommandHandler_Tests
         
         await _handler.HandleAsync(carInfo);
         
-        A.CallTo(() => _logger.LogError("Car: {CarName} invalid", carName)).MustHaveHappenedOnceExactly();
+        Assert.That(_logger.CallList[0].LogLevel, Is.EqualTo(LogLevel.Error));
+        Assert.That(_logger.CallList[0].Message, Is.EqualTo($"Car: {carName} invalid"));
     }
 
     private static CarInfo GoodCarInfo()
@@ -70,28 +71,23 @@ public class UpdateCarInfoCommandHandler_Tests
     }
 }
 
-/* ADAPTERS */
-public interface ILog
+public class FakeLogger : ILogger
 {
-    void LogError(string? message, params object?[] args);
-}
-
-public class LogAdapter : ILog
-{
-    private readonly ILogger _logger;
-
-    public LogAdapter(ILogger logger)
+    public List<(LogLevel LogLevel, string Message)> CallList = new(); 
+    public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception? exception, Func<TState, Exception?, string> formatter)
     {
-        _logger = logger;
+        CallList.Add((logLevel, formatter(state, exception)));
     }
 
+    public bool IsEnabled(LogLevel logLevel) => true;
 
-    public void LogError(string? message, params object?[] args)
+    public IDisposable? BeginScope<TState>(TState state) where TState : notnull
     {
-        _logger.LogError(message, args);
+        // code here tracks scope with disposables
+
+        return default;
     }
 }
-/* ADAPTERS */
 
 public interface ICarInfoValidator
 {
@@ -105,9 +101,9 @@ public record CarInfoUpdateResult(bool Successful);
 public class UpdateCarInfoCommandHandler : IUpdateCarInfoCommandHandler
 {
     private readonly ICarInfoValidator _validator;
-    private readonly ILog _logger;
+    private readonly ILogger _logger;
 
-    public UpdateCarInfoCommandHandler(ICarInfoValidator validator, ILog logger)
+    public UpdateCarInfoCommandHandler(ICarInfoValidator validator, ILogger logger)
     {
         _validator = validator;
         _logger = logger;
