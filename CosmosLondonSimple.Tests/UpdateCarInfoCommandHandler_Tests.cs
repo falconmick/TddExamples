@@ -24,8 +24,13 @@ public record CarInfo();
 
 public class UpdateCarInfoCommandHandler : IUpdateCarInfoCommandHandler
 {
+    public Task HandleAsync(CarInfo fake)
+    {
+        return Task.CompletedTask;
+    }
 }
 
 public interface IUpdateCarInfoCommandHandler
 {
+    Task HandleAsync(CarInfo fake);
 }
