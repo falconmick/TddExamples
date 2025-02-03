@@ -16,3 +16,11 @@ public class UpdateCarInfoCommandHandler_Tests
         Assert.Pass();
     }
 }
+
+public class UpdateCarInfoCommandHandler : IUpdateCarInfoCommandHandler
+{
+}
+
+public interface IUpdateCarInfoCommandHandler
+{
+}
