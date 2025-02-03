@@ -1,3 +1,5 @@
+using FakeItEasy;
+
 namespace CosmosLondonSimple.Tests;
 
 public class UpdateCarInfoCommandHandler_Tests
@@ -11,11 +13,14 @@ public class UpdateCarInfoCommandHandler_Tests
     }
 
     [Test]
-    public void Test1()
+    public async Task Test1()
     {
+        await _handler.HandleAsync(A.Fake<CarInfo>());
         Assert.Pass();
     }
 }
+
+public record CarInfo();
 
 public class UpdateCarInfoCommandHandler : IUpdateCarInfoCommandHandler
 {
