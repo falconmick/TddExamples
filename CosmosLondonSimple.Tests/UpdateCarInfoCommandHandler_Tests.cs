@@ -1,4 +1,5 @@
 using FakeItEasy;
+using Microsoft.Extensions.Logging;
 
 namespace CosmosLondonSimple.Tests;
 
@@ -6,6 +7,7 @@ public class UpdateCarInfoCommandHandler_Tests
 {
     private ICarInfoValidator _validator;
     private IUpdateCarInfoCommandHandler _handler;
+    private ILogger _logger;
 
     [SetUp]
     public void Setup()
@@ -46,6 +48,21 @@ public class UpdateCarInfoCommandHandler_Tests
         Assert.False(result.Successful);
     }
 
+    [Test]
+    public async Task HandleAsync_Should_Log_Error_If_Validation_Failed()
+    {
+        var carName = "Ford";
+        var carInfo = GoodCarInfo() with
+        {
+            CarName = carName
+        };
+        A.CallTo(() => _validator.Validate(carInfo)).Returns(false);
+        
+        await _handler.HandleAsync(carInfo);
+        
+        A.CallTo(() => _logger.LogError("Car: {CarName} invalid", carName)).MustHaveHappenedOnceExactly();
+    }
+
     private static CarInfo GoodCarInfo()
     {
         return A.Fake<CarInfo>();
@@ -57,7 +74,7 @@ public interface ICarInfoValidator
     bool Validate(CarInfo carInfo);
 }
 
-public record CarInfo();
+public record CarInfo(string CarName);
 
 public record CarInfoUpdateResult(bool Successful);
 
