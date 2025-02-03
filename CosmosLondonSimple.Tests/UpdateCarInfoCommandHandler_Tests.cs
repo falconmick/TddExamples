@@ -30,15 +30,17 @@ public class UpdateCarInfoCommandHandler_Tests
 
 public record CarInfo();
 
+public record CarInfoUpdateResult();
+
 public class UpdateCarInfoCommandHandler : IUpdateCarInfoCommandHandler
 {
-    public Task HandleAsync(CarInfo fake)
+    public async Task<CarInfoUpdateResult> HandleAsync(CarInfo fake)
     {
-        return Task.CompletedTask;
+        return new CarInfoUpdateResult();
     }
 }
 
 public interface IUpdateCarInfoCommandHandler
 {
-    Task HandleAsync(CarInfo fake);
+    Task<CarInfoUpdateResult> HandleAsync(CarInfo fake);
 }
