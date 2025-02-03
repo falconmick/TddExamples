@@ -36,9 +36,10 @@ public class UpdateCarInfoCommandHandler_Tests
     [Test]
     public async Task HandleAsync_Should_Return_Non_Success_When_Validation_Failed()
     {
-        A.CallTo(() => _validator.Validate(A<CarInfo>._)).Returns(false);
-        
-        var result = await _handler.HandleAsync(GoodCarInfo());
+        var carInfo = GoodCarInfo();
+        A.CallTo(() => _validator.Validate(carInfo)).Returns(false);
+
+        var result = await _handler.HandleAsync(carInfo);
         
         Assert.False(result.Successful);
     }
