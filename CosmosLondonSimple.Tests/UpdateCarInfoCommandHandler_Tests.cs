@@ -18,6 +18,14 @@ public class UpdateCarInfoCommandHandler_Tests
         await _handler.HandleAsync(A.Fake<CarInfo>());
         Assert.Pass();
     }
+
+    [Test]
+    public async Task HandleAsync_Should_Return_CarInfoUpdateResult()
+    {
+        var result = await _handler.HandleAsync(A.Fake<CarInfo>());
+        
+        Assert.NotNull(result);
+    }
 }
 
 public record CarInfo();
