@@ -11,14 +11,7 @@ public class UpdateCarInfoCommandHandler_Tests
     {
         _handler = new UpdateCarInfoCommandHandler();
     }
-
-    [Test]
-    public async Task HandleAsync_Should_Exist_And_Accept_CarInfo()
-    {
-        await _handler.HandleAsync(GoodCarInfo());
-        Assert.Pass();
-    }
-
+    
     [Test]
     public async Task HandleAsync_Should_Accept_GoodInfo_And_Return_Success_Result()
     {
