@@ -33,6 +33,16 @@ public class UpdateCarInfoCommandHandler_Tests
         A.CallTo(() => _validator.Validate(carInfo)).MustHaveHappenedOnceExactly();
     }
 
+    [Test]
+    public async Task HandleAsync_Should_Return_Non_Success_When_Validation_Failed()
+    {
+        A.CallTo(() => _validator.Validate(A<CarInfo>._)).Returns(false);
+        
+        var result = await _handler.HandleAsync(GoodCarInfo());
+        
+        Assert.False(result.Successful);
+    }
+
     private static CarInfo GoodCarInfo()
     {
         return A.Fake<CarInfo>();
