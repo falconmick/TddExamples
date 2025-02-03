@@ -18,6 +18,8 @@ public class UpdateCarInfoCommandHandler_Tests
     [Test]
     public async Task HandleAsync_Should_Accept_GoodInfo_And_Return_Success_Result()
     {
+        A.CallTo(() => _validator.Validate(A<CarInfo>._)).Returns(true);
+        
         var result = await _handler.HandleAsync(GoodCarInfo());
         
         Assert.True(result.Successful);
@@ -70,8 +72,7 @@ public class UpdateCarInfoCommandHandler : IUpdateCarInfoCommandHandler
 
     public async Task<CarInfoUpdateResult> HandleAsync(CarInfo carInfo)
     {
-        _validator.Validate(carInfo);
-        return new CarInfoUpdateResult(true);
+        return new CarInfoUpdateResult(_validator.Validate(carInfo));
     }
 }
 
