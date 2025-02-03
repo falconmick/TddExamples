@@ -36,7 +36,7 @@ public class UpdateCarInfoCommandHandler : IUpdateCarInfoCommandHandler
 {
     public async Task<CarInfoUpdateResult> HandleAsync(CarInfo fake)
     {
-        return new CarInfoUpdateResult(false);
+        return new CarInfoUpdateResult(true);
     }
 }
 
