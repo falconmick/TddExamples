@@ -39,6 +39,11 @@ public class UpdateCarInfoCommandHandler_Tests
     }
 }
 
+public interface ICarInfoValidator
+{
+    bool Validate(CarInfo carInfo);
+}
+
 public record CarInfo();
 
 public record CarInfoUpdateResult(bool Successful);
