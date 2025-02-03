@@ -4,11 +4,14 @@ namespace CosmosLondonSimple.Tests;
 
 public class UpdateCarInfoCommandHandler_Tests
 {
+    private ICarInfoValidator _validator;
     private IUpdateCarInfoCommandHandler _handler;
 
     [SetUp]
     public void Setup()
     {
+        _validator = A.Fake<ICarInfoValidator>();
+        
         _handler = new UpdateCarInfoCommandHandler();
     }
     
@@ -18,6 +21,16 @@ public class UpdateCarInfoCommandHandler_Tests
         var result = await _handler.HandleAsync(GoodCarInfo());
         
         Assert.True(result.Successful);
+    }
+
+    [Test]
+    public async Task HandleAsync_Should_Validate_CarInfo()
+    {
+        var carInfo = GoodCarInfo();
+        
+        await _handler.HandleAsync(carInfo);
+
+        A.CallTo(() => _validator.Validate(carInfo)).MustHaveHappenedOnceExactly();
     }
 
     private static CarInfo GoodCarInfo()
