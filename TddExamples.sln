@@ -4,6 +4,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CosmosLondon.Tests", "Cosmo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CosmosLondon", "CosmosLondon\CosmosLondon.csproj", "{F857087D-9052-42E4-9416-753D7F50A5B2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CosmosLondonSimple", "CosmosLondonSimple\CosmosLondonSimple.csproj", "{694F2307-5262-4D59-B5A5-E336DBEDE6B9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CosmosLondonSimple.Tests", "CosmosLondonSimple.Tests\CosmosLondonSimple.Tests.csproj", "{7F7A0402-6EF8-4BB4-8904-97B677986439}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +22,13 @@ Global
 		{F857087D-9052-42E4-9416-753D7F50A5B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F857087D-9052-42E4-9416-753D7F50A5B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F857087D-9052-42E4-9416-753D7F50A5B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{694F2307-5262-4D59-B5A5-E336DBEDE6B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{694F2307-5262-4D59-B5A5-E336DBEDE6B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{694F2307-5262-4D59-B5A5-E336DBEDE6B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{694F2307-5262-4D59-B5A5-E336DBEDE6B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F7A0402-6EF8-4BB4-8904-97B677986439}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F7A0402-6EF8-4BB4-8904-97B677986439}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F7A0402-6EF8-4BB4-8904-97B677986439}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F7A0402-6EF8-4BB4-8904-97B677986439}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
